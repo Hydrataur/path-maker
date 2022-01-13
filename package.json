@@ -1,5 +1,5 @@
 {
-  "name": "path-maker",
+  "name": "svg-path-maker",
   "version": "1.0.0",
   "description": "A Typescript library that generates an SVG path based on a set of points.",
   "main": "index.js",
