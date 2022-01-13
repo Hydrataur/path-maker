@@ -3,6 +3,10 @@ export interface Point {
     y: number;
 }
 
+function MakeSlope(source: Point, target: Point): number {
+    return (source.y - target.y) / (source.x - target.x);
+}
+
 function FindArcPoint(source: Point, target: Point, radius: number): Point {
     const eqTop: number = radius * (source.x - target.x);
     const eqBottom: number = Math.sqrt(Math.pow(source.x - target.x, 2) + Math.pow(source.y - target.y, 2));
@@ -16,11 +20,19 @@ function FindArcPoint(source: Point, target: Point, radius: number): Point {
             y = target.y - radius;
         }
     } else {
-        const slope: number = (source.y - target.y) / (source.x - target.x);
+        const slope: number = MakeSlope(source, target);
         y = slope * (x - source.x) + source.y;
     }
 
     return { x, y };
+}
+
+function GetArcSweepFlag(arcOrigin: Point, centerPoint: Point, slope: number): string {
+    if ((arcOrigin.y - centerPoint.y) - slope * (arcOrigin.x - centerPoint.x) > 0) {
+        return slope > 0 ? ' 1' : ' 0';
+    } else {
+        return slope > 0 ? ' 0' : ' 1';
+    }
 }
 
 function MakeArc(arcOrigin: Point, arcEnd: Point, centerPoint: Point, radius: number): string {
@@ -29,20 +41,8 @@ function MakeArc(arcOrigin: Point, arcEnd: Point, centerPoint: Point, radius: nu
     }
 
     let arc: string = ` A${ radius },${ radius } 0 0`;
-    const slope: number = (arcOrigin.y - arcEnd.y) / (arcOrigin.x - arcEnd.x);
-    if (slope > 0) {
-        if ((arcOrigin.y - centerPoint.y) - slope * (arcOrigin.x - centerPoint.x) > 0) {
-            arc += ' 1';
-        } else {
-            arc += ' 0';
-        }
-    } else {
-        if ((arcOrigin.y - centerPoint.y) - slope * (arcOrigin.x - centerPoint.x) > 0) {
-            arc += ' 0';
-        } else {
-            arc += ' 1';
-        }
-    }
+    const slope: number = MakeSlope(arcOrigin, arcEnd);
+    arc += GetArcSweepFlag(arcOrigin, centerPoint, slope);
 
     arc += ` ${ arcEnd.x },${ arcEnd.y }`;
     return arc;
