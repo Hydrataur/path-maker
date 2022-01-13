@@ -1,0 +1,19 @@
+{
+  "name": "path-maker",
+  "version": "1.0.0",
+  "description": "A Typescript library that generates an SVG path based on a set of points.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hydrataur/path-maker.git"
+  },
+  "author": "Hydrataur",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hydrataur/path-maker/issues"
+  },
+  "homepage": "https://github.com/Hydrataur/path-maker#readme"
+}
